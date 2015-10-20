@@ -24,7 +24,7 @@
 
 #define LOG_TAG         "Daemon"
 #define	MAXFILE         3
-#define SLEEP_INTERVAL  2 * 60
+#define SLEEP_INTERVAL  1
 
 volatile int sig_running = 1;
 

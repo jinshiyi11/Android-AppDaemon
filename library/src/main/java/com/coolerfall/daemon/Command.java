@@ -6,6 +6,7 @@ import android.os.Build;
 import android.util.Log;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -83,11 +84,6 @@ public class Command {
 	 */
 	@SuppressWarnings("deprecation")
 	public static boolean install(Context context, String destDir, String filename) {
-		String abi = Build.CPU_ABI;
-		if (!abi.startsWith("arm")) {
-			return false;
-		}
-
 		try {
 			File f = new File(context.getDir(destDir, Context.MODE_PRIVATE), filename);
 			if (f.exists()) {
@@ -95,7 +91,7 @@ public class Command {
 				return false;
 			}
 
-			copyAssets(context, filename, f, "0755");
+			copyFile(f, new FileInputStream(context.getFilesDir().getParent() + "/lib/"+filename), "0755");
 			return true;
 		} catch (Exception e) {
 			Log.e(TAG, "installBinary failed: " + e.getMessage());
